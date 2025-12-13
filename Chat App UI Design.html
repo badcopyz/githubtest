@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chat/Messaging App UI</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+
+body {
+  display: flex;
+  height: 100vh;
+  background: #f3f4f6;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 300px;
+  background: #1f2937;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar h2 {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #374151;
+}
+
+.contact-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.contact {
+  padding: 15px 20px;
+  cursor: pointer;
+  border-bottom: 1px solid #374151;
+  display: flex;
+  align-items: center;
+}
+
+.contact:hover { background: #374151; }
+
+.contact img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.contact .name {
+  font-weight: bold;
+}
+
+/* Chat area */
+.chat-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #e5e7eb;
+}
+
+.chat-header {
+  padding: 20px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: bold;
+  border-bottom: 1px solid #3b82f6;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  max-width: 60%;
+  margin-bottom: 15px;
+  padding: 10px 15px;
+  border-radius: 15px;
+  position: relative;
+  word-wrap: break-word;
+}
+
+.message.user {
+  align-self: flex-end;
+  background: #3b82f6;
+  color: #fff;
+  border-bottom-right-radius: 0;
+}
+
+.message.friend {
+  align-self: flex-start;
+  background: #d1d5db;
+  color: #111;
+  border-bottom-left-radius: 0;
+}
+
+/* Input area */
+.chat-input {
+  display: flex;
+  padding: 15px;
+  border-top: 1px solid #cbd5e1;
+  background: #f9fafb;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 12px 15px;
+  border-radius: 20px;
+  border: 1px solid #cbd5e1;
+  outline: none;
+}
+
+.chat-input button {
+  padding: 12px 20px;
+  margin-left: 10px;
+  background: #2563eb;
+  border: none;
+  color: #fff;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.chat-input button:hover {
+  background: #1e40af;
+}
+
+/* Scrollbar styles */
+.chat-messages::-webkit-scrollbar,
+.contact-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb,
+.contact-list::-webkit-scrollbar-thumb {
+  background: #9ca3af;
+  border-radius: 4px;
+}
+
+.chat-messages::-webkit-scrollbar-track,
+.contact-list::-webkit-scrollbar-track {
+  background: #f3f4f6;
+}
+
+/* Responsive */
+@media(max-width: 768px){
+  body { flex-direction: column; }
+  .sidebar { width: 100%; height: 150px; display: flex; overflow-x: auto; flex-direction: row; }
+  .contact-list { display: flex; flex-direction: row; overflow-x: auto; }
+  .contact { flex: 0 0 auto; border-bottom: none; border-right: 1px solid #374151; }
+  .chat-area { flex: 1; height: calc(100vh - 150px); }
+}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <h2>Chats</h2>
+  <div class="contact-list">
+    <div class="contact" onclick="selectContact(this)">
+      <img src="https://i.pravatar.cc/50?img=1" alt="User1">
+      <div class="name">Alice</div>
+    </div>
+    <div class="contact" onclick="selectContact(this)">
+      <img src="https://i.pravatar.cc/50?img=2" alt="User2">
+      <div class="name">Bob</div>
+    </div>
+    <div class="contact" onclick="selectContact(this)">
+      <img src="https://i.pravatar.cc/50?img=3" alt="User3">
+      <div class="name">Charlie</div>
+    </div>
+  </div>
+</div>
+
+<!-- Chat area -->
+<div class="chat-area">
+  <div class="chat-header" id="chat-header">Select a chat</div>
+  <div class="chat-messages" id="chat-messages"></div>
+  <div class="chat-input">
+    <input type="text" id="message-input" placeholder="Type a message">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<script>
+let currentContact = null;
+
+function selectContact(contact){
+  currentContact = contact.querySelector('.name').innerText;
+  document.getElementById('chat-header').innerText = currentContact;
+  document.getElementById('chat-messages').innerHTML = ''; // clear messages
+}
+
+// Send message
+function sendMessage(){
+  const input = document.getElementById('message-input');
+  const msg = input.value.trim();
+  if(!msg || !currentContact) return;
+
+  const msgDiv = document.createElement('div');
+  msgDiv.classList.add('message', 'user');
+  msgDiv.innerText = msg;
+  document.getElementById('chat-messages').appendChild(msgDiv);
+  input.value = '';
+  scrollToBottom();
+
+  // Simulate friend reply after 1s
+  setTimeout(() => {
+    const replyDiv = document.createElement('div');
+    replyDiv.classList.add('message', 'friend');
+    replyDiv.innerText = 'Reply from ' + currentContact;
+    document.getElementById('chat-messages').appendChild(replyDiv);
+    scrollToBottom();
+  }, 1000);
+}
+
+function scrollToBottom(){
+  const chat = document.getElementById('chat-messages');
+  chat.scrollTop = chat.scrollHeight;
+}
+</script>
+
+</body>
+</html>

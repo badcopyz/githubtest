@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Digital Business Card</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* ================= PRINT SETUP ================= */
+@page {
+  size: 3.75in 2.25in;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #888;
+  font-family: -apple-system, BlinkMacSystemFont,
+               "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+/* ================= SHEET ================= */
+.sheet {
+  width: 7.5in;
+  height: 2.25in;
+  display: flex;
+  margin: 20px auto;
+}
+
+/* ================= CARD BASE ================= */
+.card {
+  width: 3.75in;
+  height: 2.25in;
+  padding: 0.32in;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+}
+
+/* Subtle texture */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255,255,255,0.02) 0px,
+      rgba(255,255,255,0.02) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  pointer-events: none;
+}
+
+/* ================= FRONT ================= */
+.front {
+  background: linear-gradient(135deg, #0d1838, #2d56e0);
+  color: #f4f5f7;
+}
+
+/* Light slab */
+.front::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background: linear-gradient(
+    110deg,
+    rgba(255,255,255,0.06),
+    transparent 60%
+  );
+  transform: rotate(-6deg);
+}
+
+/* FULL-CARD DIGITAL WATERMARK */
+.digital {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "Courier New", monospace;
+  font-size: 92px;
+  font-weight: 900;
+  letter-spacing: -2px;
+  text-transform: uppercase;
+
+  color: rgba(244,245,247,0.02); /* weaker presence (higher transparency) */
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Name + role */
+.name {
+  font-size: 18px;
+  font-weight: 700;
+  position: relative;
+  z-index: 2;
+}
+
+.role {
+  margin-top: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  color: rgba(244,245,247,0.9);
+  position: relative;
+  z-index: 2;
+}
+
+/* Accent cut */
+.cut {
+  position: absolute;
+  right: 0.32in;
+  top: 0.32in;
+  width: 2px;
+  height: 1.35in;
+  background: linear-gradient(to bottom, #5a7bff, transparent);
+}
+
+/* ================= BACK ================= */
+.back {
+  background: #0b1328;
+  color: #f4f5f7;
+}
+
+/* Back panels */
+.back::before {
+  content: "";
+  position: absolute;
+  inset: -15%;
+  background: linear-gradient(
+    115deg,
+    rgba(255,255,255,0.05),
+    transparent 50%
+  );
+  transform: rotate(-4deg);
+}
+
+.back::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background: linear-gradient(
+    65deg,
+    rgba(0,0,0,0.4),
+    transparent 65%
+  );
+  transform: rotate(6deg);
+}
+
+/* Info block */
+.info {
+  font-size: 10.5px;
+  line-height: 1.6;
+  position: relative;
+  z-index: 2;
+}
+
+.label {
+  display: block;
+  margin-top: 6px;
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #9aa3c7;
+}
+
+/* ================= PRINT SAFETY ================= */
+@media print {
+  body { background: none; }
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="sheet">
+
+  <!-- FRONT -->
+  <div class="card front">
+    <div class="digital">DIGITAL</div>
+
+    <div class="name">Your Name</div>
+    <div class="role">UI/UX Designer · Web Developer</div>
+
+    <div class="cut"></div>
+  </div>
+
+  <!-- BACK -->
+  <div class="card back">
+    <div class="info">
+      <span class="label">Email</span>
+      you@email.com
+
+      <span class="label">Website</span>
+      yoursite.com
+
+      <span class="label">Phone</span>
+      +123 456 789
+
+      <span class="label">Location</span>
+      City, Country
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* No JavaScript needed */
+</script>
+
+</body>
+</html>

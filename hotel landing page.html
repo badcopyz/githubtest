@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LuxeVista Hotel</title>
+<style>
+/* ================= RESET ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+body {
+  background: #111;
+  color: #eee;
+  overflow-x: hidden;
+}
+
+/* ================= NAVBAR ================= */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 20px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(30,15,0,0.85);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.6);
+}
+nav h1 {
+  font-size: 2rem;
+  color: #00bfff;
+  letter-spacing: 2px;
+  font-weight: bold;
+  text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+}
+nav a {
+  text-decoration: none;
+  color: #eee;
+  font-weight: 500;
+  position: relative;
+  transition: 0.3s;
+}
+nav a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  left: 0;
+  bottom: -5px;
+  background: #00bfff;
+  transition: width 0.3s;
+}
+nav a:hover::after { width: 100%; }
+nav a:hover { color: #00bfff; }
+
+/* ================= HERO ================= */
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 120%;
+  background: url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
+  top: -10%;
+  filter: brightness(0.5);
+  z-index: 0;
+}
+.hero::after {
+  content:'';
+  position:absolute;
+  width:100%;
+  height:100%;
+  background: linear-gradient(135deg, rgba(30,15,0,0.7), rgba(0,191,255,0.3));
+  z-index:1;
+}
+.hero-content {
+  position: relative;
+  z-index:2;
+  text-align:center;
+  max-width:700px;
+}
+.hero h2 {
+  font-size: 3rem;
+  color:#00bfff;
+  text-shadow:2px 2px 12px rgba(0,0,0,0.7);
+  margin-bottom:20px;
+}
+.hero p {
+  font-size:1.2rem;
+  margin-bottom:30px;
+  opacity:0.9;
+}
+.hero button {
+  padding:18px 50px;
+  border-radius:40px;
+  border:none;
+  background: linear-gradient(135deg, #4b2e0f, #00bfff);
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.hero button:hover {
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+}
+.hero button:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.8);
+}
+
+/* ================= SECTIONS ================= */
+section {
+  padding:120px 50px;
+  max-width:1200px;
+  margin:auto;
+  position:relative;
+}
+section h3 {
+  text-align:center;
+  font-size:2.5rem;
+  margin-bottom:60px;
+  color:#00bfff;
+  text-shadow:1px 1px 5px rgba(0,0,0,0.5);
+}
+
+/* ================= ROOM CARDS ================= */
+.room-cards {
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+  gap:30px;
+}
+.room-card {
+  background: rgba(30,15,0,0.35);
+  backdrop-filter: blur(12px);
+  border-radius:25px;
+  padding:30px;
+  box-shadow:0 15px 35px rgba(0,0,0,0.8);
+  transition: transform 0.5s, box-shadow 0.5s;
+  overflow:hidden;
+  position:relative;
+}
+.room-card img {
+  width:100%;
+  border-radius:20px;
+  margin-bottom:20px;
+  transition: transform 0.4s;
+}
+.room-card:hover img {
+  transform: scale(1.05) translateY(-5px);
+}
+.room-card h4 {
+  color:#00bfff;
+  font-size:1.5rem;
+  margin-bottom:10px;
+}
+.room-card p {
+  opacity:0.85;
+  margin-bottom:15px;
+}
+.room-card button {
+  padding:12px 35px;
+  border:none;
+  border-radius:30px;
+  background: linear-gradient(135deg,#4b2e0f,#00bfff);
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.room-card button:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow:0 12px 30px rgba(0,0,0,0.8);
+}
+.room-card button:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* ================= FACILITIES ================= */
+.facilities {
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap:25px;
+}
+.facility-card {
+  background: rgba(30,15,0,0.25);
+  backdrop-filter: blur(15px);
+  border-radius:20px;
+  padding:25px;
+  text-align:center;
+  box-shadow:0 12px 30px rgba(0,0,0,0.7);
+  transition: transform 0.5s, box-shadow 0.5s;
+}
+.facility-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow:0 22px 45px rgba(0,0,0,0.9);
+}
+.facility-card i {
+  font-size:2.5rem;
+  margin-bottom:15px;
+  color:#00bfff;
+}
+.facility-card h4 { margin-bottom:10px; color:#00bfff; }
+.facility-card p { opacity:0.85; }
+
+/* ================= GALLERY ================= */
+.gallery {
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+  gap:25px;
+}
+.gallery img {
+  width:100%;
+  border-radius:25px;
+  box-shadow:0 12px 35px rgba(0,0,0,0.7);
+  transition: transform 0.4s, box-shadow 0.4s;
+}
+.gallery img:hover {
+  transform: scale(1.08) translateY(-5px);
+  box-shadow:0 25px 50px rgba(0,0,0,0.9);
+}
+
+/* ================= TESTIMONIALS ================= */
+.testimonials {
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+  gap:30px;
+}
+.testimonial-card {
+  background: rgba(30,15,0,0.35);
+  backdrop-filter: blur(12px);
+  padding:25px;
+  border-radius:25px;
+  box-shadow:0 15px 35px rgba(0,0,0,0.7);
+  transition: transform 0.5s, box-shadow 0.5s;
+}
+.testimonial-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow:0 25px 50px rgba(0,0,0,0.9);
+}
+.testimonial-card p { opacity:0.9; margin-bottom:10px; }
+.testimonial-card h5 { color:#00bfff; font-weight:bold; }
+
+/* ================= RESERVATION ================= */
+form {
+  display:grid;
+  gap:20px;
+  max-width:600px;
+  margin:auto;
+}
+input,textarea {
+  padding:18px;
+  border-radius:15px;
+  border:none;
+  background: rgba(30,15,0,0.3);
+  backdrop-filter: blur(10px);
+  font-size:1rem;
+  color:#fff;
+  box-shadow:0 5px 20px rgba(0,0,0,0.5);
+}
+input:focus,textarea:focus { outline:none; transform: translateY(-2px); box-shadow:0 8px 25px rgba(0,191,255,0.5);}
+form button {
+  padding:18px;
+  border-radius:35px;
+  border:none;
+  font-weight:bold;
+  cursor:pointer;
+  background: linear-gradient(135deg,#4b2e0f,#00bfff);
+  color:#fff;
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+form button:hover {
+  transform: translateY(-5px);
+  box-shadow:0 20px 45px rgba(0,0,0,0.7);
+}
+form button:active { transform: translateY(0) scale(0.97); box-shadow:0 5px 15px rgba(0,0,0,0.7); }
+
+/* ================= FOOTER ================= */
+footer {
+  text-align:center;
+  padding:50px;
+  background: rgba(30,15,0,0.85);
+  backdrop-filter: blur(12px);
+  box-shadow: inset 0 0 25px rgba(0,0,0,0.5);
+  color:#00bfff;
+}
+
+/* ================= MEDIA ================= */
+@media(max-width:600px){
+  nav ul{display:none;}
+  .hero h2{font-size:2rem;}
+  .hero p{font-size:1rem;}
+  .room-cards,.gallery,.testimonials,.facilities{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <h1>LuxeVista</h1>
+  <ul>
+    <li><a href="#rooms">Rooms</a></li>
+    <li><a href="#facilities">Facilities</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#testimonials">Testimonials</a></li>
+    <li><a href="#reservation">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <h2>Welcome to LuxeVista Hotel</h2>
+    <p>Experience elegance, comfort, and unforgettable stays in our luxury hotel.</p>
+    <button>Book Your Stay</button>
+  </div>
+</section>
+
+<!-- ROOMS -->
+<section id="rooms">
+  <h3>Our Rooms</h3>
+  <div class="room-cards">
+    <div class="room-card">
+      <img src="https://images.unsplash.com/photo-1560347876-aeef00ee58a1?auto=format&fit=crop&w=800&q=80" alt="">
+      <h4>Ocean View Suite</h4>
+      <p>Panoramic views with luxury amenities for a serene experience.</p>
+      <button>Book Now</button>
+    </div>
+    <div class="room-card">
+      <img src="https://images.unsplash.com/photo-1582719478181-1f4adf7491ff?auto=format&fit=crop&w=800&q=80" alt="">
+      <h4>Deluxe King Room</h4>
+      <p>Elegant design with king-sized comfort for a perfect stay.</p>
+      <button>Book Now</button>
+    </div>
+    <div class="room-card">
+      <img src="https://images.unsplash.com/photo-1582719477701-9a8c8f3120fb?auto=format&fit=crop&w=800&q=80" alt="">
+      <h4>Family Suite</h4>
+      <p>Spacious rooms designed for family comfort and style.</p>
+      <button>Book Now</button>
+    </div>
+  </div>
+</section>
+
+<!-- FACILITIES -->
+<section id="facilities">
+  <h3>Our Facilities</h3>
+  <div class="facilities">
+    <div class="facility-card">
+      <i>🛁</i>
+      <h4>Spa & Wellness</h4>
+      <p>Relax in our serene spa and wellness center with expert care.</p>
+    </div>
+    <div class="facility-card">
+      <i>🍽️</i>
+      <h4>Gourmet Dining</h4>
+      <p>World-class cuisine prepared by our expert chefs.</p>
+    </div>
+    <div class="facility-card">
+      <i>🏊‍♂️</i>
+      <h4>Infinity Pool</h4>
+      <p>Enjoy breathtaking views while swimming in our infinity pool.</p>
+    </div>
+    <div class="facility-card">
+      <i>🏋️‍♀️</i>
+      <h4>Fitness Center</h4>
+      <p>Modern gym with all essential equipment for your workouts.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <h3>Gallery</h3>
+  <div class="gallery">
+    <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80" alt="">
+    <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=800&q=80" alt="">
+    <img src="https://images.unsplash.com/photo-1496412705862-e0088f16f791?auto=format&fit=crop&w=800&q=80" alt="">
+    <img src="https://images.unsplash.com/photo-1582719477906-57c1b6b42648?auto=format&fit=crop&w=800&q=80" alt="">
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <h3>Guest Testimonials</h3>
+  <div class="testimonials">
+    <div class="testimonial-card">
+      <p>"Absolutely loved my stay! The view and rooms were breathtaking."</p>
+      <h5>- Anna W.</h5>
+    </div>
+    <div class="testimonial-card">
+      <p>"Luxury and comfort combined, plus amazing service."</p>
+      <h5>- James P.</h5>
+    </div>
+    <div class="testimonial-card">
+      <p>"The hotel exceeded all my expectations. Highly recommend!"</p>
+      <h5>- Sophia L.</h5>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVATION -->
+<section id="reservation">
+  <h3>Book Your Stay</h3>
+  <form>
+    <input type="text" placeholder="Full Name">
+    <input type="email" placeholder="Email">
+    <input type="date">
+    <input type="number" placeholder="Guests" min="1">
+    <textarea placeholder="Special Requests"></textarea>
+    <button type="submit">Reserve Now</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  &copy; 2025 LuxeVista Hotel. All rights reserved.
+</footer>
+</body>
+</html>

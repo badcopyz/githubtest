@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Olive Premium Restaurant</title>
+<style>
+/* ===================== RESET ===================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: #d4deb4;
+  overflow-x: hidden;
+  color: #2e2e2e;
+  scroll-behavior: smooth;
+  position: relative;
+}
+
+/* ===================== BACKGROUND ICONS ===================== */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><text x="10" y="40" font-size="40" fill="rgba(142,123,91,0.05)">🍴</text><text x="80" y="80" font-size="40" fill="rgba(142,123,91,0.05)">🥄</text><text x="50" y="150" font-size="40" fill="rgba(142,123,91,0.05)">🍽️</text><text x="120" y="40" font-size="40" fill="rgba(142,123,91,0.05)">🍷</text></svg>');
+  background-repeat: repeat;
+  z-index: 0;
+  pointer-events: none;
+  animation: moveBackground 60s linear infinite;
+}
+
+/* Background animation */
+@keyframes moveBackground {
+  0% { background-position: 0 0; }
+  100% { background-position: 1000px 1000px; }
+}
+
+/* ===================== NAVBAR ===================== */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 15px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(12px);
+  background: rgba(163,177,138,0.85);
+  z-index: 1000;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+nav h1 {
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+  color: #5a4d3c;
+  text-shadow: 1px 1px 2px rgba(255,255,255,0.4);
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #5a4d3c;
+  font-size: 0.95rem;
+  position: relative;
+  transition: color 0.3s;
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background: #8e7b5b;
+  left: 0;
+  bottom: -5px;
+  transition: width 0.3s;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+nav a:hover {
+  color: #8e7b5b;
+}
+
+/* ===================== HERO ===================== */
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 120%;
+  height: 140%;
+  background: url('https://images.unsplash.com/photo-1555992336-03a23c6a0c04?auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
+  opacity: 0.5;
+  transform: scale(1.1);
+  filter: brightness(0.6);
+  z-index: 0;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom right, rgba(163,177,138,0.6), rgba(142,123,91,0.4));
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #2e2e2e;
+  max-width: 800px;
+  padding: 0 20px;
+  animation: float 6s ease-in-out infinite;
+}
+
+.hero h2 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 10px rgba(255,255,255,0.5);
+  letter-spacing: 2px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  margin-bottom: 30px;
+}
+
+.hero button {
+  padding: 18px 40px;
+  border: none;
+  background: rgba(142,123,91,0.85);
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 35px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
+  backdrop-filter: blur(6px);
+}
+
+.hero button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(142,123,91,0.45);
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+/* ===================== SECTIONS ===================== */
+section {
+  padding: 120px 50px;
+  position: relative;
+  max-width: 1200px;
+  margin: auto;
+}
+
+section h3 {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 60px;
+  color: #5a4d3c;
+  text-shadow: 1px 1px 4px rgba(255,255,255,0.4);
+  letter-spacing: 1px;
+}
+
+/* ===================== CARDS ===================== */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 35px;
+}
+
+.card {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 25px;
+  padding: 35px;
+  transition: transform 0.5s, box-shadow 0.5s;
+  position: relative;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 60%);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.card:hover {
+  transform: translateY(-15px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+}
+
+.card h4 {
+  margin-bottom: 15px;
+  color: #8e7b5b;
+  font-size: 1.4rem;
+}
+
+.card p {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+/* ===================== MENU ===================== */
+.menu-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.menu-card {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(12px);
+  border-radius: 25px;
+  padding: 25px;
+  position: relative;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: transform 0.5s, box-shadow 0.5s;
+}
+
+.menu-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 60%);
+  transform: rotate(45deg);
+}
+
+.menu-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.45);
+}
+
+.menu-card img {
+  width: 100%;
+  border-radius: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+/* ===================== GALLERY CAROUSEL ===================== */
+.gallery-carousel {
+  position: relative;
+  overflow: hidden;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+  min-width: 300px;
+  margin: 0 15px;
+  border-radius: 25px;
+  overflow: hidden;
+  transition: transform 0.5s, box-shadow 0.5s;
+  cursor: pointer;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+
+.carousel-item img {
+  width: 100%;
+  display: block;
+  border-radius: 25px;
+}
+
+.carousel-item:hover {
+  transform: scale(1.08) translateY(-5px);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+}
+
+.gallery-carousel button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(142,123,91,0.85);
+  border: none;
+  color: #fff;
+  padding: 15px 20px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 5;
+  font-size: 1.5rem;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.gallery-carousel button:hover {
+  background: rgba(142,123,91,1);
+  transform: scale(1.1);
+}
+
+.gallery-carousel .prev {
+  left: 10px;
+}
+
+.gallery-carousel .next {
+  right: 10px;
+}
+
+/* ===================== TESTIMONIALS ===================== */
+.testimonials {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  gap: 30px;
+}
+
+.testimonial-card {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(12px);
+  border-radius: 25px;
+  padding: 25px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+  transition: transform 0.5s, box-shadow 0.5s;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.45);
+}
+
+.testimonial-card p {
+  opacity: 0.9;
+  margin-bottom: 10px;
+}
+
+.testimonial-card h5 {
+  color: #8e7b5b;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* ===================== TEAM ===================== */
+.team-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  gap: 30px;
+}
+
+.team-card {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(12px);
+  border-radius: 25px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+  transition: transform 0.5s, box-shadow 0.5s;
+}
+
+.team-card img {
+  width: 120px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+.team-card h4 {
+  color: #8e7b5b;
+  margin-bottom: 5px;
+}
+
+.team-card p {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.team-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.45);
+}
+
+/* ===================== FORM ===================== */
+form {
+  display: grid;
+  gap: 20px;
+  max-width: 600px;
+  margin: auto;
+}
+
+input, textarea {
+  padding: 18px;
+  border-radius: 15px;
+  border: none;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  font-size: 1rem;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(142,123,91,0.5);
+}
+
+form button {
+  padding: 18px;
+  border-radius: 35px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  background: rgba(142,123,91,0.85);
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(142,123,91,0.35);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+form button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 45px rgba(142,123,91,0.5);
+}
+
+/* ===================== WAVES ===================== */
+.wave-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 100" xmlns="http://www.w3.org/2000/svg"><path fill="%23a3b18a" fill-opacity="1" d="M0,64L60,74.7C120,85,240,107,360,106.7C480,107,600,85,720,90.7C840,96,960,128,1080,133.3C1200,139,1320,117,1380,106.7L1440,96L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path></svg>') no-repeat;
+  background-size: cover;
+  z-index: 1;
+}
+
+.wave-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 100" xmlns="http://www.w3.org/2000/svg"><path fill="%23a3b18a" fill-opacity="1" d="M0,64L60,74.7C120,85,240,107,360,106.7C480,107,600,85,720,90.7C840,96,960,128,1080,133.3C1200,139,1320,117,1380,106.7L1440,96L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path></svg>') no-repeat;
+  background-size: cover;
+  z-index: 1;
+}
+
+/* ===================== FOOTER ===================== */
+footer {
+  text-align: center;
+  padding: 50px;
+  background: rgba(163,177,138,0.85);
+  backdrop-filter: blur(8px);
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+  color: #5a4d3c;
+}
+
+/* ===================== MOBILE ===================== */
+@media(max-width:600px) {
+  nav ul { display: none; }
+  .hero h2 { font-size: 2rem; }
+  .hero p { font-size: 1rem; }
+  .cards, .menu-cards, .gallery, .team-cards, .testimonials { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<!-- NAV -->
+<nav>
+  <h1>Olive</h1>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#testimonials">Testimonials</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#reservation">Reservation</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <h2>Welcome to Olive</h2>
+    <p>Premium dining experience with a touch of elegance and flavor.</p>
+    <button>Reserve Your Table</button>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <h3>Our Story</h3>
+  <div class="cards">
+    <div class="card">
+      <h4>Exquisite Cuisine</h4>
+      <p>We bring you dishes made from the finest ingredients, crafted with love and expertise.</p>
+    </div>
+    <div class="card">
+      <h4>Warm Ambiance</h4>
+      <p>Our interior and service are designed to make every guest feel at home.</p>
+    </div>
+    <div class="card">
+      <h4>Fresh Ingredients</h4>
+      <p>We source local and organic products to ensure the highest quality for our meals.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <h3>Menu</h3>
+  <div class="menu-cards">
+    <div class="menu-card">
+      <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80" alt="Dish 1">
+      <h4>Grilled Salmon</h4>
+      <p>Delicately seasoned, served with fresh vegetables.</p>
+    </div>
+    <div class="menu-card">
+      <img src="https://images.unsplash.com/photo-1617196031798-d28744ed3c01?auto=format&fit=crop&w=800&q=80" alt="Dish 2">
+      <h4>Truffle Pasta</h4>
+      <p>Rich and creamy, garnished with freshly shaved truffles.</p>
+    </div>
+    <div class="menu-card">
+      <img src="https://images.unsplash.com/photo-1617196031798-5ef5b7d2e63d?auto=format&fit=crop&w=800&q=80" alt="Dish 3">
+      <h4>Steak Au Poivre</h4>
+      <p>Perfectly cooked steak with peppercorn sauce.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <h3>Gallery</h3>
+  <div class="gallery-carousel">
+    <button class="prev">&#10094;</button>
+    <div class="carousel-track">
+      <div class="carousel-item"><img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80" alt=""></div>
+      <div class="carousel-item"><img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=800&q=80" alt=""></div>
+      <div class="carousel-item"><img src="https://images.unsplash.com/photo-1532634726-8b9fb998825c?auto=format&fit=crop&w=800&q=80" alt=""></div>
+      <div class="carousel-item"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80" alt=""></div>
+    </div>
+    <button class="next">&#10095;</button>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <h3>Testimonials</h3>
+  <div class="testimonials">
+    <div class="testimonial-card">
+      <p>"Absolutely loved the ambiance and food. Will come back!"</p>
+      <h5>- John Doe</h5>
+    </div>
+    <div class="testimonial-card">
+      <p>"A delightful dining experience with impeccable service."</p>
+      <h5>- Jane Smith</h5>
+    </div>
+    <div class="testimonial-card">
+      <p>"The best restaurant in town. Fresh, flavorful, and cozy."</p>
+      <h5>- Alice Brown</h5>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <h3>Our Team</h3>
+  <div class="team-cards">
+    <div class="team-card">
+      <img src="https://images.unsplash.com/photo-1603415526960-f8f4a7c22bfc?auto=format&fit=crop&w=800&q=80" alt="">
+      <h4>Chef Antonio</h4>
+      <p>Head Chef</p>
+    </div>
+    <div class="team-card">
+      <img src="https://images.unsplash.com/photo-1614286068700-0e0d0a1d1b1a?auto=format&fit=crop&w=800&q=80" alt="">
+      <h4>Maria Lopez</h4>
+      <p>Restaurant Manager</p>
+    </div>
+    <div class="team-card">
+      <img src="https://images.unsplash.com/photo-1598970434795-0c54fe7c0642?auto=format&fit=crop&w=800&q=80" alt="">
+      <h4>James Carter</h4>
+      <p>Pastry Chef</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVATION -->
+<section id="reservation">
+  <h3>Reserve a Table</h3>
+  <form>
+    <input type="text" placeholder="Full Name">
+    <input type="email" placeholder="Email">
+    <input type="date">
+    <input type="time">
+    <textarea placeholder="Special Requests"></textarea>
+    <button type="submit">Book Now</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  &copy; 2025 Olive Premium Restaurant. All rights reserved.
+</footer>
+
+<!-- ===================== SCRIPTS ===================== -->
+<script>
+const track = document.querySelector('.carousel-track');
+const nextBtn = document.querySelector('.next');
+const prevBtn = document.querySelector('.prev');
+let index = 0;
+
+function updateCarousel() {
+  const width = track.children[0].getBoundingClientRect().width + 30;
+  track.style.transform = `translateX(${-index * width}px)`;
+}
+
+nextBtn.addEventListener('click', () => {
+  if(index < track.children.length - 1) index++;
+  else index = 0;
+  updateCarousel();
+});
+
+prevBtn.addEventListener('click', () => {
+  if(index > 0) index--;
+  else index = track.children.length - 1;
+  updateCarousel();
+});
+
+window.addEventListener('resize', updateCarousel);
+</script>
+
+</body>
+</html>
